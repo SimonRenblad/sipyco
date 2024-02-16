@@ -259,6 +259,8 @@ class AsyncioClient:
         self.__writer = None
         self.__target_names = None
         self.__description = None
+        self.__selected_target = None
+        self.__valid_methods = set()
 
     def __send(self, obj):
         line = pyon.encode(obj) + "\n"
