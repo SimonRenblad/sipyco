@@ -46,6 +46,7 @@ if os.name != "nt":
             await self.process.wait()
             self.reader_transport.close()
             self.writer.close()
+            await self.writer.wait_closed()
 
         async def create_subprocess(self, *args, **kwargs):
             loop = asyncio.get_event_loop()

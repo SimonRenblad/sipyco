@@ -160,6 +160,7 @@ class Server(AsyncioServer):
             pass
         finally:
             writer.close()
+            await writer.wait_closed()
 
 
 class SourceFilter:
@@ -214,3 +215,4 @@ class LogForwarder(logging.Handler, TaskObject):
             finally:
                 if writer is not None:
                     writer.close()
+                    await writer.wait_closed()

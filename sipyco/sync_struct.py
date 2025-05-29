@@ -132,6 +132,7 @@ class Subscriber:
             self.receive_task = asyncio.ensure_future(self._receive_cr())
         except:
             self.writer.close()
+            await self.writer.wait_closed()
             del self.reader
             del self.writer
             raise
@@ -146,6 +147,7 @@ class Subscriber:
                 pass
         finally:
             self.writer.close()
+            await self.writer.wait_closed()
             del self.reader
             del self.writer
 
@@ -335,6 +337,7 @@ class Publisher(AsyncioServer):
             pass
         finally:
             writer.close()
+            await writer.wait_closed()
 
     def publish(self, notifier, mod):
         line = pyon.encode(mod) + "\n"

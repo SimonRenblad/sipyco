@@ -646,6 +646,7 @@ class Server(_AsyncioServer):
             pass
         finally:
             writer.close()
+            await writer.wait_closed()
 
     async def wait_terminate(self):
         await self._terminate_request.wait()

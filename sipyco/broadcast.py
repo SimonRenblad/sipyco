@@ -27,6 +27,7 @@ class Receiver:
             self.receive_task = asyncio.ensure_future(self._receive_cr())
         except:
             self.writer.close()
+            await self.writer.wait_closed()
             del self.reader
             del self.writer
             raise
@@ -41,6 +42,7 @@ class Receiver:
                 pass
         finally:
             self.writer.close()
+            await self.writer.wait_closed()
             del self.reader
             del self.writer
 
@@ -97,6 +99,7 @@ class Broadcaster(AsyncioServer):
             pass
         finally:
             writer.close()
+            await writer.wait_closed()
 
     def broadcast(self, name, obj):
         if name in self._recipients:
